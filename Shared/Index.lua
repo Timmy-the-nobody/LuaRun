@@ -1,9 +1,3 @@
-local sCmd = "luarun"
-
-local function isLuaRun(sInput)
-    return sInput:sub(0, (#sCmd + 1)) == (sCmd.." ")
-end
-
-Console.RegisterCommand( sCmd, function( ... ) -- Each word is an argument
+Console.RegisterCommand( "luarun", function( ... ) -- Each word is an argument
     load( table.concat( { ... }, " " ) )
-end )
+end, "Runs your lua code easily !" )
