@@ -2,7 +2,16 @@ local tCommands = {
     {
         command = "lua_run",
         func = function(...)
-            load(table.concat({...}, " "))()
+            local sCode = table.concat({...}, " ")
+            local fn, sErr = load(sCode)
+            if not fn then
+                Console.Error("[lua_run] Syntax error: "..sErr)
+                return
+            end
+            local bOk, xErr = pcall(fn)
+            if not bOk then
+                Console.Error("[lua_run] Runtime error: "..tostring(xErr))
+            end
         end,
         desc = "Console command that allows you to execute lua code",
         args = {"Lua string to execute"}
